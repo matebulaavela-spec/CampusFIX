@@ -1,0 +1,17 @@
+version: '3.8' 
+services: 
+  db: 
+    image: mcr.microsoft.com/mssql/server:2022-latest 
+    environment: 
+      ACCEPT_EULA: "Y" 
+      SA_PASSWORD: "YourStrong!Passw0rd123" 
+    ports: 
+      - "1433:1433" 
+  app: 
+    build: . 
+    ports: 
+      - "8080:8080" 
+    environment: 
+      - ConnectionStrings__DefaultConnection=Server=db;Database=CampusFixDb;User Id=sa;Password=YourStrong!Passw0rd123;TrustServerCertificate=True 
+    depends_on: 
+      - db 
